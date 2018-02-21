@@ -17,15 +17,21 @@
 #import <ARKit/ARKit.h>
 #import <Metal/Metal.h>
 #import <MetalKit/MetalKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
-#import <QuartzCore/QuartzCore.h>
 
-@interface ViewController : UIViewController <WKUIDelegate, WKNavigationDelegate, UITextFieldDelegate, ARSessionDelegate, ARSessionObserver, WKScriptMessageHandler> {
-
+@interface ViewController : UIViewController <WKUIDelegate,
+                                              WKNavigationDelegate,
+                                              UITextFieldDelegate,
+                                              ARSessionDelegate,
+                                              ARSessionObserver,
+                                              WKScriptMessageHandler> {
+    MTKView *mtkView;
     WKWebView *wkWebView;
 
     UITextField *urlTextField;
+    bool urlTextFieldActive;
     UIButton *backButton;
     UIButton *refreshButton;
 
@@ -39,20 +45,21 @@
     float far;
 
     bool showingCameraFeed;
+    bool iPhoneXDevice;
     UIColor *wkWebViewOriginalBackgroundColor;
-  
-    NSMutableDictionary* jsAnchorIdsToObjCAnchorIds;
-    NSMutableDictionary* objCAnchorIdsToJSAnchorIds;
-    NSMutableDictionary* anchors;
-  
+
+    NSMutableDictionary *jsAnchorIdsToObjCAnchorIds;
+    NSMutableDictionary *objCAnchorIdsToJSAnchorIds;
+    NSMutableDictionary *anchors;
+
     // These flags control the synchronization between the natively
     // rendered camera frame and the 3D scene rendered in the JS side.
     bool drawNextCameraFrame;
     bool sendARData;
-  
+
     CFTimeInterval timeOfLastDrawnCameraFrame;
 }
 
--(void)loadURL:(NSString*)urlString;
+- (void)loadURL:(NSString *)urlString;
 
 @end

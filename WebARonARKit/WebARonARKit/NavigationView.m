@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#include <Foundation/Foundation.h>
 
-@interface ProgressView : UIView
+#import "NavigationView.h"
 
-@property(nonatomic, strong, null_resettable) UIColor *progressFillColor;
-@property(nonatomic, strong, null_resettable) UIColor *progressBackgroundColor;
-@property(nonatomic, assign) float progressValue;
-@property(nonatomic, assign) NSTimeInterval animationDuration;
+@interface NavigationView ()
 
-- (void)setProgressValue:(float)value
-                animated:(BOOL)animated
-              completion:(void (^__nullable)(BOOL complete))completion;
+@end
 
-- (void)setHidden:(BOOL)hidden
-         animated:(BOOL)animated
-       completion:(void (^__nullable)(BOOL complete))completion;
+@implementation NavigationView
+
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    UIColor *lineColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.25];
+    CGContextSetStrokeColorWithColor(context, lineColor.CGColor);
+    CGContextSetLineWidth(context, 0.5f);
+    CGContextMoveToPoint(context, 0, rect.size.height);
+    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
+    CGContextStrokePath(context);
+}
 
 @end
